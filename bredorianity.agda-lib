@@ -1,0 +1,4 @@
+name:    bredorianity
+
+include: src
+depend: standard-library

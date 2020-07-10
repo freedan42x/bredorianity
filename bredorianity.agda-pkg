@@ -1,0 +1,12 @@
+name:              bredorianity
+version:           v0.0.1
+author:            bredor
+
+homepage:          None
+license:           MIT
+license-file:      LICENSE.md
+
+tested-with:       2.6.1
+description:       bredorianity is an Agda library ...
+include:
+    - src
