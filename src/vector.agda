@@ -51,12 +51,13 @@ sum [] = 0
 sum (x ∷ xs) = x + sum xs
 
 
+count-acc : ℕ → ∀ n → Vec ℕ n
+count-acc k zero = []
+count-acc k (suc n) = k ∷ count-acc (suc k) n
+
+
 count : ∀ n → Vec ℕ n
-count n = helper 0 n
-  where
-    helper : ℕ → ∀ n → Vec ℕ n
-    helper k zero = []
-    helper k (suc n) = k ∷ helper (suc k) n
+count n = count-acc 0 n
 
 
 take : (k : Fin n) → Vec A n → Vec A (toℕ k)
@@ -125,6 +126,11 @@ zipWith-+-zero [] = refl
 zipWith-+-zero (y ∷ ys) = cong (y ∷_) (zipWith-+-zero ys)
 
 
+zipWith-*-zero : ∀ ys → zipWith _*_ (replicate n 0) ys ≡ replicate n 0
+zipWith-*-zero [] = refl
+zipWith-*-zero (_ ∷ ys) = cong (0 ∷_) (zipWith-*-zero ys)
+
+
 zipWith-map-+-* : ∀ k p (xs : Vec ℕ n)
                 → map ((k + p) *_) xs
                 ≡ zipWith _+_ (map (k *_) xs) (map (p *_) xs)
@@ -138,3 +144,8 @@ zipWith-map-+-* k p (x ∷ xs)
       → map (f ∘ g) xs ≡ map f (map g xs)
 ∘-map _ _ [] = refl
 ∘-map f g (x ∷ xs) = cong (f (g x) ∷_) (∘-map f g xs)
+
+
+sum-replicate-0 : ∀ n → sum (replicate n 0) ≡ 0
+sum-replicate-0 zero = refl
+sum-replicate-0 (suc n) = sum-replicate-0 n
