@@ -12,12 +12,14 @@ open import func
 ---------------------------------
 
 
-Assoc : ∀ A (_∙_ : A → A → A) → Set a
-Assoc _ _∙_ = ∀ x y z → (x ∙ y) ∙ z ≡ x ∙ (y ∙ z)
+AssocR CommR : {A : Set a} (_~_ : A → A → Set b) (_∙_ : A → A → A) → Set (ℓmax b a)
+AssocR _~_ _∙_ = ∀ x y z → ((x ∙ y) ∙ z) ~ (x ∙ (y ∙ z))
+CommR  _~_ _∙_ = ∀ x y   → (x ∙ y) ~ (y ∙ x)
 
 
-Comm : ∀ A (_∙_ : A → A → A) → Set a
-Comm _ _∙_ = ∀ x y → x ∙ y ≡ y ∙ x
+Assoc Comm : {A : Set a} (_∙_ : A → A → A) → Set a
+Assoc = AssocR _≡_
+Comm  = CommR  _≡_
 
 
 Inj : (A → B) → Set _
@@ -45,7 +47,7 @@ record _⇔_ (A : Set a) (B : Set b) : Set (ℓmax a b) where
     to : A → B
     inv : Inv to
     proof : Bij to × Bij (Inv.g inv)
-    
+
 
 
 ---------------------------------

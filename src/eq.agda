@@ -14,7 +14,11 @@ private
 
 
 postulate
-  fun-ext : (∀ x → f x ≡ g x) → f ≡ g
+  fun-extR : (_~_ : ∀ {a} {A : Set a} → A → A → Set a) → (∀ x → f x ~ g x) → f ~ g
+
+
+fun-ext : (∀ x → f x ≡ g x) → f ≡ g
+fun-ext = fun-extR _≡_
 
 
 cong-sym : ∀ {x y} {f : A → B} (p : x ≡ y) → cong f (sym p) ≡ sym (cong f p)
